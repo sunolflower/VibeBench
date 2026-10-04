@@ -1,0 +1,58 @@
+VibeBench ELF comparison
+Run: 2026-10-04T09:36:10.162510+00:00
+Compare original macOS build 2 and Ubuntu build 1 section contents:
+NULL: MATCH, alloc=False, bytes=0
+.isr_vector: MATCH, alloc=True, bytes=192
+.text: MATCH, alloc=True, bytes=12828
+.rodata: MATCH, alloc=True, bytes=444
+.init_array: MATCH, alloc=True, bytes=4
+.fini_array: MATCH, alloc=True, bytes=4
+.data: MATCH, alloc=True, bytes=112
+.bss: MATCH, alloc=True, bytes=0
+._user_heap_stack: MATCH, alloc=True, bytes=0
+.ARM.attributes: MATCH, alloc=False, bytes=40
+.comment: MATCH, alloc=False, bytes=51
+.debug_info: MATCH, alloc=False, bytes=141509
+.debug_abbrev: MATCH, alloc=False, bytes=23044
+.debug_loc: MATCH, alloc=False, bytes=70964
+.debug_aranges: MATCH, alloc=False, bytes=3624
+.debug_ranges: MATCH, alloc=False, bytes=3400
+.debug_line: MATCH, alloc=False, bytes=73028
+.debug_str: DIFFER, alloc=False, bytes=17329
+.debug_frame: MATCH, alloc=False, bytes=8804
+.symtab: MATCH, alloc=False, bytes=7792
+.strtab: MATCH, alloc=False, bytes=3465
+.shstrtab: MATCH, alloc=False, bytes=233
+All allocated sections match; only .debug_str differs.
+Actual readelf --debug-dump=info differences:
+@@ -65601,7 +65601,7 @@
+     <22863>   DW_AT_low_pc      : 0x8001afc
+     <22867>   DW_AT_high_pc     : 0x8001c10
+     <2286b>   DW_AT_name        : (indirect string, offset: 0x430b): ../../../../../../libgcc/config/arm/lib1funcs.S
+-    <2286f>   DW_AT_comp_dir    : (indirect string, offset: 0x433b): /build/gcc-arm-none-eabi-A9GHXF/gcc-arm-none-eabi-10.3-2021.07/build/arm-none-eabi/thumb/v6-m/nofp/libgcc
++    <2286f>   DW_AT_comp_dir    : (indirect string, offset: 0x433b): /build/gcc-arm-none-eabi-hYfgK4/gcc-arm-none-eabi-10.3-2021.07/build/arm-none-eabi/thumb/v6-m/nofp/libgcc
+     <22873>   DW_AT_producer    : (indirect string, offset: 0x43a5): GNU AS 2.37
+     <22877>   DW_AT_language    : 32769	(MIPS assembler)
+   Compilation Unit @ offset 0x22879:
+@@ -65614,7 +65614,7 @@
+     <22889>   DW_AT_low_pc      : 0x8001c10
+     <2288d>   DW_AT_high_pc     : 0x8001de4
+     <22891>   DW_AT_name        : (indirect string, offset: 0x430b): ../../../../../../libgcc/config/arm/lib1funcs.S
+-    <22895>   DW_AT_comp_dir    : (indirect string, offset: 0x433b): /build/gcc-arm-none-eabi-A9GHXF/gcc-arm-none-eabi-10.3-2021.07/build/arm-none-eabi/thumb/v6-m/nofp/libgcc
++    <22895>   DW_AT_comp_dir    : (indirect string, offset: 0x433b): /build/gcc-arm-none-eabi-hYfgK4/gcc-arm-none-eabi-10.3-2021.07/build/arm-none-eabi/thumb/v6-m/nofp/libgcc
+     <22899>   DW_AT_producer    : (indirect string, offset: 0x43a5): GNU AS 2.37
+     <2289d>   DW_AT_language    : 32769	(MIPS assembler)
+   Compilation Unit @ offset 0x2289f:
+@@ -65627,7 +65627,7 @@
+     <228af>   DW_AT_low_pc      : 0x8001de4
+     <228b3>   DW_AT_high_pc     : 0x8001de6
+     <228b7>   DW_AT_name        : (indirect string, offset: 0x430b): ../../../../../../libgcc/config/arm/lib1funcs.S
+-    <228bb>   DW_AT_comp_dir    : (indirect string, offset: 0x433b): /build/gcc-arm-none-eabi-A9GHXF/gcc-arm-none-eabi-10.3-2021.07/build/arm-none-eabi/thumb/v6-m/nofp/libgcc
++    <228bb>   DW_AT_comp_dir    : (indirect string, offset: 0x433b): /build/gcc-arm-none-eabi-hYfgK4/gcc-arm-none-eabi-10.3-2021.07/build/arm-none-eabi/thumb/v6-m/nofp/libgcc
+     <228bf>   DW_AT_producer    : (indirect string, offset: 0x43a5): GNU AS 2.37
+     <228c3>   DW_AT_language    : 32769	(MIPS assembler)
+ 
+objcopy --strip-debug comparison on temporary copies:
+a3e7c7f6f75dad9b378868472978f3557b3f3ae74a45a7e1d531e48d711859de  macos-stripped.elf
+a3e7c7f6f75dad9b378868472978f3557b3f3ae74a45a7e1d531e48d711859de  ubuntu-stripped.elf
+Original firmware/build artifacts were preserved.
